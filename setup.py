@@ -61,7 +61,7 @@ setup(
     long_description=get_readme_description(),
     long_description_content_type='text/markdown',
     author='Tien Nguyen Van',
-    url='https://github.com/hieupth/yolov9',
+    url='https://github.com/tien-ngnvan/yolov9',
     keywords=[],
     install_requires=[],
     classifiers=[
