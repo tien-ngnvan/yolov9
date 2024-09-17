@@ -104,6 +104,7 @@ def run(
         plots=True,
         callbacks=Callbacks(),
         compute_loss=None,
+        detect_layer=None,
 ):
     # Initialize/load model and set device
     training = model is not None
@@ -190,6 +191,20 @@ def run(
         with dt[1]:
             preds, train_out = model(im) if compute_loss else (model(im, augment=augment), None)
 
+        if isinstance(train_out, dict):
+            name = list(train_out.keys())
+            if detect_layer is None:
+                train_out = train_out[name[0]]
+            else:
+                train_out = compute_loss[detect_layer]
+            
+        if isinstance(compute_loss, dict):
+            name = list(compute_loss.keys())
+            if detect_layer is None:
+                compute_loss = compute_loss[name[0]]
+            else:
+                compute_loss = compute_loss[detect_layer]
+            
         # Loss
         if compute_loss:
             loss += compute_loss(train_out, targets)[1]  # box, obj, cls
